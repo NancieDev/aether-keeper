@@ -185,7 +185,6 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions, rollback procedu
 1. Read [QUICKSTART.md](./QUICKSTART.md) (5 minutes)
 2. Pick a task from [README](./README.md)
 3. Follow [CONTRIBUTING.md](./CONTRIBUTING.md)
-4. Submit PR (reviewed in 24 hours)
 
 **Total Bounty**: $4,600 USD  
 
