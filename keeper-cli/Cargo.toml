@@ -1,0 +1,24 @@
+[package]
+name = "keeper-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+clap = { version = "4.4", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.11", features = ["json"] }
+stellar-strkey = "0.0.7"
+soroban-sdk = "21.3"
+hex = "0.4"
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+env_logger = "0.11"
+
+[dev-dependencies]
+tempfile = "3.8"

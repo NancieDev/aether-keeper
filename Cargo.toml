@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "contracts/aether_core",
+    "keeper-cli"
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Aether Team"]
+license = "Apache-2.0"
+repository = "https://github.com/NancieDev/aether-keeper"

@@ -1,0 +1,141 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  test-contract:
+    name: Contract Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: contracts/aether_core
+      
+      - name: Run contract tests
+        run: cd contracts/aether_core && cargo test -- --nocapture
+      
+      - name: Check contract formatting
+        run: cd contracts/aether_core && cargo fmt -- --check
+      
+      - name: Lint contract code
+        run: cd contracts/aether_core && cargo clippy --all-targets -- -D warnings
+      
+      - name: Build WASM
+        run: cd contracts/aether_core && cargo build --target wasm32-unknown-unknown --release
+
+  test-keeper:
+    name: Keeper CLI Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: keeper-cli
+      
+      - name: Run keeper tests
+        run: cargo test -p keeper-cli -- --nocapture
+      
+      - name: Lint keeper code
+        run: cargo clippy -p keeper-cli --all-targets -- -D warnings
+
+  test-frontend:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        run: cd frontend && npm install --frozen-lockfile
+      
+      - name: Type check
+        run: cd frontend && npm run type-check
+      
+      - name: Lint
+        run: cd frontend && npm run lint
+      
+      - name: Format check
+        run: cd frontend && npm run format -- --check
+      
+      - name: Build
+        run: cd frontend && npm run build
+
+  security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run security audit
+        run: |
+          cargo audit --deny warnings
+
+  build-all:
+    name: Full Build
+    runs-on: ubuntu-latest
+    needs: [test-contract, test-keeper, test-frontend]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Build everything
+        run: make build
+
+  coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      
+      - name: Install tarpaulin
+        run: cargo install cargo-tarpaulin
+      
+      - name: Generate coverage
+        run: cd contracts/aether_core && cargo tarpaulin --out Xml
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./cobertura.xml
+          fail_ci_if_error: false

@@ -1,0 +1,24 @@
+# Rust files
+*.rs linguist-language=Rust
+
+# Cargo files
+Cargo.toml linguist-language=TOML
+Cargo.lock linguist-language=TOML
+
+# Frontend files
+*.tsx linguist-language=TypeScript
+*.ts linguist-language=TypeScript
+*.jsx linguist-language=JavaScript
+*.js linguist-language=JavaScript
+
+# Config files
+*.json linguist-language=JSON
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.toml linguist-language=TOML
+
+# Shell scripts
+*.sh linguist-language=Shell
+
+# Documentation
+*.md linguist-documentation=true
