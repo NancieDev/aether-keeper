@@ -225,5 +225,3 @@ Licensed under Apache-2.0. See [LICENSE](./LICENSE) for details.
 - [Freighter Wallet](https://www.freighter.app/)
 
 ---
-
-**Built with ❤️ for the Stellar ecosystem**
