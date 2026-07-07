@@ -180,18 +180,6 @@ make deploy-prod ADMIN_KEY=SABC... NETWORK=public
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions, rollback procedures, and verification steps.
 
----
-
-## 🌊 Join Drips Wave!
-
-**Aether Keeper is officially seeking contributors via Drips Wave program.**
-
-✅ **Why Join?**
-- Earn bounties ($300-$500 per task)
-- Build production-grade Soroban experience
-- 99.5% contributor acceptance rate (clear specs, fast feedback)
-- 24-hour code reviews
-- No gatekeeping—all levels welcome
 
 **Get Started**:
 1. Read [QUICKSTART.md](./QUICKSTART.md) (5 minutes)
@@ -200,7 +188,6 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions, rollback procedu
 4. Submit PR (reviewed in 24 hours)
 
 **Total Bounty**: $4,600 USD  
-**Submit**: https://www.drips.network/wave
 
 ---
 
